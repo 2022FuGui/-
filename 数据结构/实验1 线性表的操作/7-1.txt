@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <iostream>
+#define MAX 100
+typedef int Status;
+using namespace std;
+#define OK 1
+#define ERROR 0
+
+//线性表结构 
+typedef struct linearList{
+	int length;
+	int myList[MAX];
+}linearList;
+
+//初始化线性表
+Status initLinearList(linearList &L){
+	if(L.myList){
+		L.length = 0;
+		return OK;
+	}
+	return ERROR;
+} 
+//创建线性表
+Status createLinearList(linearList &L,int val){
+	if(L.length>MAX-1){
+		return ERROR;
+	}
+	L.myList[L.length] = val;
+	++(L.length);
+	return OK;
+} 
+//线性表的查找
+Status findElmentByLinearList(linearList &L,int e){
+	int len = L.length;
+	for(int i=0;i<len;++i){
+		if(L.myList[i]==e){
+		//当前i是找到元素的下标位置,i+1是对应找的元素第几个位置 
+			return OK; 
+		}
+	}
+	return ERROR;
+}
+//线性表插入
+Status insertElementBy(linearList &L,int pos,int e){
+	int len = L.length;
+	//插入位置[1, len+1]
+	if(len >= MAX || pos<1 || pos>len+1){
+		return ERROR;
+	}
+	for(int i=len;i>pos-1;i--){
+		L.myList[i] = L.myList[i-1];	
+	} 
+	
+	L.myList[pos-1] = e;
+	//插入成功,表长++ 
+	L.length++;
+	return OK;
+}
+//线性表判空
+Status isEmptyByList(linearList &L){	
+	return L.length==0;
+} 
+//线性表判满 
+Status isFullByList(linearList &L){	
+	return L.length==MAX;
+} 
+//线性表删除,范围[1,length] 
+Status deleteElmentByList(linearList &L,int pos){
+	if(isEmptyByList(L)){
+		return ERROR;
+	}
+	if(pos<1 || pos>L.length){
+		return ERROR;
+	}
+	for(int i=pos-1;i<L.length;i++){
+		L.myList[i] = L.myList[i+1];
+	}
+	//表长减少 
+	L.length--;
+	return OK;
+} 
+int displayLinearList(linearList &L){
+	if(isEmptyByList(L)){
+        return 0;
+    }else{
+        for(int i=0;i<L.length-1;i++){
+            cout << L.myList[i];
+            cout << " ";
+        }
+        cout << L.myList[L.length-1];
+    }
+    return 1;
+} 
+
+//主方法	
+int main(){
+    linearList list;
+    int n;
+    if(initLinearList(list)){
+        cin >> n;
+        for(int i=0;i<n;i++){
+            int num;
+            cin >> num;
+            createLinearList(list,num);
+        }
+        displayLinearList(list);
+    }
+	return 0;
+}

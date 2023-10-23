@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+int main(int argc, char *argv[]) {
+	int n,m;
+	cin>>n>>m;
+	int a[n];
+	m = m%n;
+	for(int i=0;i<n;i++)
+		scanf("%d",&a[i]);
+	int t;
+	for(int i=0;i<m;i++)
+	{
+		t = a[0];
+		for(int j=0;j<n;j++)
+		{
+			a[j] = a[j+1];
+		}
+		a[n-1] = t;
+	}
+    int h=0;
+	for(int i=0;i<n;i++)
+    {
+        if(h==0)
+        {
+            printf("%d",a[i]);
+            h++;
+        }
+        else
+            printf(" %d",a[i]);
+    }
+
+	return 0;
+}
